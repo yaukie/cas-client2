@@ -1,0 +1,130 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>cas-client2</groupId>
+  <artifactId>cas-client2</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>cas-client2</name>
+  <description>Example using Brave to trace RPCs from Spring Web MVC</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <spring.version>2.5.6</spring.version>
+    <brave.version>5.1.4</brave.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.zipkin.brave</groupId>
+        <artifactId>brave-bom</artifactId>
+        <version>${brave.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.zipkin.brave</groupId>
+      <artifactId>brave</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.zipkin.brave</groupId>
+      <artifactId>brave-spring-beans</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.zipkin.reporter2</groupId>
+      <artifactId>zipkin-reporter-spring-beans</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.zipkin.reporter2</groupId>
+      <artifactId>zipkin-sender-urlconnection</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.zipkin.brave</groupId>
+      <artifactId>brave-context-log4j12</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.zipkin.brave</groupId>
+      <artifactId>brave-instrumentation-httpclient</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <!-- comment here if you can't use 4.4+ https://github.com/openzipkin/brave/issues/431 -->
+      <version>4.4.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.zipkin.brave</groupId>
+      <artifactId>brave-instrumentation-spring-webmvc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+            <!-- JSTL -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>runtime</scope>
+        </dependency>
+     <dependency>
+     	<groupId>simple-sso</groupId>
+		<artifactId>simple-sso</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+    <dependency>
+		    <groupId>se.jiderhamn.classloader-leak-prevention</groupId>
+		    <artifactId>classloader-leak-prevention-servlet</artifactId>
+		    <version>2.1.0</version>
+	</dependency>
+  </dependencies>
+  
+  
+  <build>
+  <finalName>casClient2</finalName>
+    <plugins>
+ 	<!-- tomcat -->
+    	  <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <server>tomcat7</server>
+                    <url>http://127.0.0.1:8088/manager/text</url>
+                    <username>admin</username>                               
+ 				    <password>admin</password>
+ 				    <port>8088</port>
+ 				    <update>true</update>
+      				<path>/casClient2</path>
+                    <charset>UTF-8</charset>
+                    <encoding>UTF-8</encoding>
+                    <uriEncoding>UTF-8</uriEncoding>
+                </configuration>
+            </plugin>
+    </plugins>
+  </build>
+</project>
